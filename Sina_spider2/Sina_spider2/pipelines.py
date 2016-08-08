@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import pymongo
-from items import InformationItem, TweetsItem
+from .items import InformationItem, TweetsItem
 
 
 class MongoDBPipleline(object):

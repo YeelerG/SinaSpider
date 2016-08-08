@@ -28,14 +28,14 @@ class Spider(RedisSpider):
         selector = Selector(response)
         ID = re.findall('weibo\.cn/(\d+)', response.url)[0]
         text1 = ";".join(selector.xpath('body/div[@class="c"]/text()').extract())  # 获取标签里的所有text()
-        nickname = re.findall(u'\u6635\u79f0[:|\uff1a](.*?);', text1)  # 昵称
-        gender = re.findall(u'\u6027\u522b[:|\uff1a](.*?);', text1)  # 性别
-        place = re.findall(u'\u5730\u533a[:|\uff1a](.*?);', text1)  # 地区（包括省份和城市）
-        signature = re.findall(u'\u7b80\u4ecb[:|\uff1a](.*?);', text1)  # 个性签名
-        birthday = re.findall(u'\u751f\u65e5[:|\uff1a](.*?);', text1)  # 生日
-        sexorientation = re.findall(u'\u6027\u53d6\u5411[:|\uff1a](.*?);', text1)  # 性取向
-        marriage = re.findall(u'\u611f\u60c5\u72b6\u51b5[:|\uff1a](.*?);', text1)  # 婚姻状况
-        url = re.findall(u'\u4e92\u8054\u7f51[:|\uff1a](.*?);', text1)  # 首页链接
+        nickname = re.findall('\u6635\u79f0[:|\uff1a](.*?);', text1)  # 昵称
+        gender = re.findall('\u6027\u522b[:|\uff1a](.*?);', text1)  # 性别
+        place = re.findall('\u5730\u533a[:|\uff1a](.*?);', text1)  # 地区（包括省份和城市）
+        signature = re.findall('\u7b80\u4ecb[:|\uff1a](.*?);', text1)  # 个性签名
+        birthday = re.findall('\u751f\u65e5[:|\uff1a](.*?);', text1)  # 生日
+        sexorientation = re.findall('\u6027\u53d6\u5411[:|\uff1a](.*?);', text1)  # 性取向
+        marriage = re.findall('\u611f\u60c5\u72b6\u51b5[:|\uff1a](.*?);', text1)  # 婚姻状况
+        url = re.findall('\u4e92\u8054\u7f51[:|\uff1a](.*?);', text1)  # 首页链接
 
         informationItems["_id"] = ID
         if nickname:
@@ -71,9 +71,9 @@ class Spider(RedisSpider):
             selector = etree.HTML(r.content)
             texts = ";".join(selector.xpath('//body//div[@class="tip2"]/a//text()'))
             if texts:
-                num_tweets = re.findall(u'\u5fae\u535a\[(\d+)\]', texts)  # 微博数
-                num_follows = re.findall(u'\u5173\u6ce8\[(\d+)\]', texts)  # 关注数
-                num_fans = re.findall(u'\u7c89\u4e1d\[(\d+)\]', texts)  # 粉丝数
+                num_tweets = re.findall('\u5fae\u535a\[(\d+)\]', texts)  # 微博数
+                num_follows = re.findall('\u5173\u6ce8\[(\d+)\]', texts)  # 关注数
+                num_fans = re.findall('\u7c89\u4e1d\[(\d+)\]', texts)  # 粉丝数
                 if num_tweets:
                     informationItems["Num_Tweets"] = int(num_tweets[0])
                 if num_follows:
@@ -95,6 +95,6 @@ class Spider(RedisSpider):
         if r.status_code == 200:
             selector = etree.HTML(r.content)
             texts = selector.xpath(
-                u'body//table/tr/td/a[text()="\u5173\u6ce8\u4ed6" or text()="\u5173\u6ce8\u5979"]/@href')
+                'body//table/tr/td/a[text()="\u5173\u6ce8\u4ed6" or text()="\u5173\u6ce8\u5979"]/@href')
             IDs = re.findall('uid=(\d+)', ";".join(texts), re.S)
         return IDs

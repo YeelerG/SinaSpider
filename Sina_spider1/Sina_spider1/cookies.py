@@ -45,13 +45,13 @@ def getCookies(weibo):
         jsonStr = r.content.decode('gbk')
         info = json.loads(jsonStr)
         if info["retcode"] == "0":
-            print "Get Cookie Success!( Account:%s )" % account
+            print("Get Cookie Success!( Account:%s )" % account)
             cookie = session.cookies.get_dict()
             cookies.append(cookie)
         else:
-            print "Failed!( Reason:%s )" % info['reason']
+            print("Failed!( Reason:%s )" % info['reason'])
     return cookies
 
 
 cookies = getCookies(myWeiBo)
-print "Get Cookies Finish!( Num:%d)" % len(cookies)
+print("Get Cookies Finish!( Num:%d)" % len(cookies))
